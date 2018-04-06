@@ -816,7 +816,7 @@ open class NavigationMapView: MGLMapView, UIGestureRecognizerDelegate {
             
             // The last coord of the preceding step, is shared with the first coord of the next step.
             // We don't need both.
-            var legCoordinates = Array(leg.steps.flatMap {
+            var legCoordinates = Array(leg.steps.compactMap {
                 $0.coordinates?.suffix(from: 1)
             }.joined())
             
@@ -863,7 +863,7 @@ open class NavigationMapView: MGLMapView, UIGestureRecognizerDelegate {
         var linesPerLeg: [MGLPolylineFeature] = []
         
         for (index, leg) in route.legs.enumerated() {
-            let legCoordinates = Array(leg.steps.flatMap {
+            let legCoordinates = Array(leg.steps.compactMap {
                 $0.coordinates
             }.joined())
             
@@ -1005,7 +1005,7 @@ open class NavigationMapView: MGLMapView, UIGestureRecognizerDelegate {
             return
         }
         
-        let streetsSourceIdentifiers = style.sources.flatMap {
+        let streetsSourceIdentifiers = style.sources.compactMap {
             $0 as? MGLVectorSource
         }.filter {
             $0.isMapboxStreets
